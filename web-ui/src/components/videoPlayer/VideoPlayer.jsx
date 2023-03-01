@@ -64,6 +64,7 @@ const VideoPlayer = (props) => {
       // player.load(config.PLAYBACK_URL_1);
       player.load(props.url);
       player.setVolume(0.5);
+      player.setRebufferToLive(true);
     }
     const mediaPlayerScript = document.createElement("script");
     mediaPlayerScript.src = "https://player.live-video.net/1.8.0/amazon-ivs-player.min.js";
