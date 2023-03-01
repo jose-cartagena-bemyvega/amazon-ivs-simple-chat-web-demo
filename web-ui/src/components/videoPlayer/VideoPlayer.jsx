@@ -7,7 +7,7 @@ import * as config from '../../config';
 // Styles
 import './VideoPlayer.css';
 
-const VideoPlayer = () => {
+const VideoPlayer = (props) => {
   const maxMetaData = 10;
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const VideoPlayer = () => {
   
       // Initialize player
       const player = MediaPlayerPackage.create();
-      player.attachHTMLVideoElement(document.getElementById("video-player"));
+      player.attachHTMLVideoElement(document.getElementById(props.id));
   
       // Attach event listeners
       player.addEventListener(PlayerState.PLAYING, () => {
@@ -61,7 +61,8 @@ const VideoPlayer = () => {
   
       // Setup stream and play
       player.setAutoplay(true);
-      player.load(config.PLAYBACK_URL);
+      player.load(config.PLAYBACK_URL_1);
+    //   player.load(props.url);
       player.setVolume(0.5);
     }
     const mediaPlayerScript = document.createElement("script");
@@ -74,7 +75,7 @@ const VideoPlayer = () => {
   return (
     <div className="player-wrapper">
       <div className="aspect-169 pos-relative full-width full-height">
-        <video id="video-player" className="video-elem pos-absolute full-width" playsInline muted></video>
+        <video id={props.id} className="video-elem pos-absolute full-width" playsInline muted></video>
       </div>
     </div>
   )

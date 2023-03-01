@@ -129,7 +129,8 @@ const Chat = () => {
       </header>
       <div className="main full-width full-height chat-container">
         <div className="content-wrapper mg-2">
-        <VideoPlayer />
+        <VideoPlayer id="video-player-1" url={config.PLAYBACK_URL_1}/>
+        <VideoPlayer id="video-player-2" url={config.PLAYBACK_URL_2}/>
           <div className="col-wrapper">
             <div className="chat-wrapper pos-absolute pd-t-1 top-0 bottom-0">
               <div className="messages">
