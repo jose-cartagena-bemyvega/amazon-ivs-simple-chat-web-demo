@@ -61,8 +61,8 @@ const VideoPlayer = (props) => {
   
       // Setup stream and play
       player.setAutoplay(true);
-      player.load(config.PLAYBACK_URL_1);
-    //   player.load(props.url);
+      // player.load(config.PLAYBACK_URL_1);
+      player.load(props.url);
       player.setVolume(0.5);
     }
     const mediaPlayerScript = document.createElement("script");
