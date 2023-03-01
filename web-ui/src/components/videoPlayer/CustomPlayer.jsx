@@ -1,86 +1,39 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: MIT-0
 
-import React, { useEffect } from 'react';
-import * as config from '../../config';
+import React, { useEffect } from "react";
+import * as config from "../../config";
+import OvenPlayer from "ovenplayer";
 
 // Styles
 // import './VideoPlayer.css';
 
 const CustomPlayer = (props) => {
-  const maxMetaData = 10;
+    useEffect(() => {
+        OvenPlayer.create(props.id, {
+            autoStart: true,
+            autoFallback: true,
+            mute: true,
+            controls: true,
+            sources: [
+                {
+                    label: "label_for_webrtc",
+                    type: "hls",
+                    file: props.url
+                    // file: "https://vod.ome-test-2.bemyvega.dev/default_app_TZP2jwRJFmxjHDGgrGzb34-ptz/2022-11-18T10:58:25+0000/llhls.m3u8"
+                }
+            ]
+        });
+    }, []);
 
-  useEffect(() => {
-    let metaData = []
-    const mediaPlayerScriptLoaded = () => {
-      // This shows how to include the Amazon IVS Player with a script tag from our CDN
-      // If self hosting, you may not be able to use the create() method since it requires
-      // that file names do not change and are all hosted from the same directory.
-  
-      const MediaPlayerPackage = window.IVSPlayer;
-  
-      // First, check if the browser supports the Amazon IVS player.
-      if (!MediaPlayerPackage.isPlayerSupported) {
-          console.warn("The current browser does not support the Amazon IVS player.");
-          return;
-      }
-  
-      const PlayerState = MediaPlayerPackage.PlayerState;
-      const PlayerEventType = MediaPlayerPackage.PlayerEventType;
-  
-      // Initialize player
-      const player = MediaPlayerPackage.create();
-      player.attachHTMLVideoElement(document.getElementById(props.id));
-  
-      // Attach event listeners
-      player.addEventListener(PlayerState.PLAYING, () => {
-          console.log("Player State - PLAYING");
-      });
-      player.addEventListener(PlayerState.ENDED, () => {
-          console.log("Player State - ENDED");
-      });
-      player.addEventListener(PlayerState.READY, () => {
-          console.log("Player State - READY");
-      });
-      player.addEventListener(PlayerEventType.ERROR, (err) => {
-          console.warn("Player Event - ERROR:", err);
-      });
-      player.addEventListener(PlayerEventType.TEXT_METADATA_CUE, (cue) => {
-          console.log('Timed metadata: ', cue.text);
-          const metadataText = JSON.parse(cue.text);
-          const productId = metadataText['productId'];
-          const metadataTime = player.getPosition().toFixed(2);
-  
-          // only keep max 5 metadata records
-          if (metaData.length > maxMetaData) {
-            metaData.length = maxMetaData;
-          }
-          // insert new metadata
-          metaData.unshift(`productId: ${productId} (${metadataTime}s)`);
-      });
-  
-      // Setup stream and play
-      player.setAutoplay(true);
-      // player.load(config.PLAYBACK_URL_1);
-      player.load(props.url);
-      player.setVolume(0.5);
-      player.setLiveLowLatencyEnabled(true)
-    }
-    const mediaPlayerScript = document.createElement("script");
-    mediaPlayerScript.src = "https://player.live-video.net/1.8.0/amazon-ivs-player.min.js";
-    mediaPlayerScript.async = true;
-    mediaPlayerScript.onload = () => mediaPlayerScriptLoaded();
-    document.body.appendChild(mediaPlayerScript);
-  }, []);
-  
-  return (
-    <div className="player-wrapper">
-      <div className="aspect-169 pos-relative full-width full-height">
-        <video id={props.id} className="video-elem pos-absolute full-width" playsInline muted controls></video>
-      </div>
-    </div>
-  )
-}
+    return (
+        <div className="player-wrapper">
+            <div id={props.id} className="video-elem pos-absolute full-width"></div>
+            {/* <div className="aspect-169 pos-relative full-width full-height">
+                <video id={props.id} className="video-elem pos-absolute full-width" playsInline muted controls></video>
+            </div> */}
+        </div>
+    );
+};
 
-export default VideoPlayer;
-
+export default CustomPlayer;
