@@ -5,9 +5,9 @@ import React, { useEffect } from 'react';
 import * as config from '../../config';
 
 // Styles
-import './VideoPlayer.css';
+// import './VideoPlayer.css';
 
-const VideoPlayer = (props) => {
+const CustomPlayer = (props) => {
   const maxMetaData = 10;
 
   useEffect(() => {
@@ -60,15 +60,11 @@ const VideoPlayer = (props) => {
       });
   
       // Setup stream and play
-      player.setLogLevel(LogLevel.DEBUG)
       player.setAutoplay(true);
       // player.load(config.PLAYBACK_URL_1);
       player.load(props.url);
       player.setVolume(0.5);
-      player.setRebufferToLive(true)
-    //   player.setLiveLowLatencyEnabled()
-      console.log(player.getLiveLatency())
-      console.log(player.isLiveLowLatency())
+      player.setLiveLowLatencyEnabled(true)
     }
     const mediaPlayerScript = document.createElement("script");
     mediaPlayerScript.src = "https://player.live-video.net/1.8.0/amazon-ivs-player.min.js";
@@ -87,3 +83,4 @@ const VideoPlayer = (props) => {
 }
 
 export default VideoPlayer;
+
