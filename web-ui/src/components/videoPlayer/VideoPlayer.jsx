@@ -60,7 +60,7 @@ const VideoPlayer = (props) => {
       });
   
       // Setup stream and play
-      player.setLogLevel(LogLevel.DEBUG)
+      player.setLogLevel(MediaPlayerPackage.LogLevel.DEBUG)
       player.setAutoplay(true);
       // player.load(config.PLAYBACK_URL_1);
       player.load(props.url);
