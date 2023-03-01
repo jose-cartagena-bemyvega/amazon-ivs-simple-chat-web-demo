@@ -60,10 +60,12 @@ const VideoPlayer = (props) => {
       });
   
       // Setup stream and play
+      player.setLogLevel(LogLevel.DEBUG)
       player.setAutoplay(true);
       // player.load(config.PLAYBACK_URL_1);
       player.load(props.url);
       player.setVolume(0.5);
+      console.log(player.getLiveLatency());
       player.setRebufferToLive(true);
     }
     const mediaPlayerScript = document.createElement("script");
