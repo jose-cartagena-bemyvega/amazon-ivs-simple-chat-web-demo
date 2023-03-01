@@ -75,7 +75,7 @@ const VideoPlayer = (props) => {
   return (
     <div className="player-wrapper">
       <div className="aspect-169 pos-relative full-width full-height">
-        <video id={props.id} className="video-elem pos-absolute full-width" playsInline muted></video>
+        <video id={props.id} className="video-elem pos-absolute full-width" playsInline muted controls></video>
       </div>
     </div>
   )
